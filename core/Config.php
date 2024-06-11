@@ -25,7 +25,7 @@ class Config
             foreach ($config as $key => $value) {
                 $this->$key = $value;
             }
-            var_dump($config);
+//            var_dump($config);
         }
 
 
