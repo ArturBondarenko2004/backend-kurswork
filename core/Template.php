@@ -6,14 +6,19 @@ class Template
 {
     protected $templateFilePath;
     protected $paramsArray;
-
+public function __set($name, $value)
+{
+    Core::get()->template->setParam($name, $value);
+}
     public function __construct($templateFilePath)
     {
         $this->templateFilePath = $templateFilePath;
         $this->paramsArray = [];
     }
 
-
+public function setTemplateFilePath($path){
+        $this->templateFilePath = $path;
+}
     public function getHTML()
     {
         ob_start();
