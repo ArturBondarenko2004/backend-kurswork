@@ -11,6 +11,7 @@ class Core
     public $template;
     public $db;
     private static $instance;
+    public $session;
 
     private function __construct()
     {
@@ -20,7 +21,9 @@ class Core
         $name = Config::get()->dbName;
         $login = Config::get()->dbLogin;
         $password = Config::get()->dbPassword;
-        $this->db = new DB($host,$name,$login,$password);
+        $this->db = new DB($host, $name, $login, $password);
+        $this->session = new Session();
+        session_start();
 
     }
 
@@ -28,6 +31,7 @@ class Core
     {
         $this->router = new \core\Router($route);
         $params = $this->router->run();
+        if(!empty($params))
         $this->template->setParams($params);
     }
 

@@ -25,9 +25,9 @@ class DB
             $parts = [];
             foreach ($where_fields as $field) {
                 $parts [] = "{$field} = :{$field}";
-                $where_string .= implode(' AND ', $parts);
-
             }
+            $where_string .= implode(' AND ', $parts);
+            var_dump($where_string);
         } else
             if (is_string($where))
                 $where_string = $where;
@@ -38,6 +38,7 @@ class DB
 
     public function select($table, $fields = "*", $where = null)
     {
+
         if (is_array($fields))
             $fields_string = implode(',', $fields);
         else
@@ -45,7 +46,6 @@ class DB
                 $fields_string = $fields;
             else
                 $fields_string = "*";
-
         $where_string = $this->where($where);
 
         $sql = "SELECT {$fields_string} FROM {$table} {$where_string}";
@@ -53,8 +53,9 @@ class DB
         foreach ($where as $key => $value) {
 
             $sth->bindValue(":{$key}", $value);
-            $sth->execute();
+
         }
+        $sth->execute();
         return $sth->fetchAll();
     }
 
