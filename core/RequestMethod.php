@@ -2,8 +2,7 @@
 
 namespace core;
 
-class ReguestMethod
-
+class RequestMethod
 {
     public $array;
 
@@ -14,11 +13,14 @@ class ReguestMethod
 
     public function __get($name)
     {
-        return $this->array[$name];
+        if (isset($this->array[$name]))
+            return $this->array[$name];
+        else
+            return null;
     }
 
     public function getAll()
     {
-        return  $this->array;
+        return $this->array;
     }
 }

@@ -5,6 +5,7 @@ namespace core;
 class Controller
 {
     protected $template;
+    protected $errorMessages;
     public $isPost = false;
     public $isGet = false;
     public $post;
@@ -27,6 +28,7 @@ class Controller
         }
         $this->post = new Post();
         $this->get = new Get();
+        $this->errorMessages = [];
     }
 
     public function render($pathToView = null)
@@ -42,5 +44,24 @@ class Controller
     {
         header("Location: {$path}");
         die;
+    }
+
+    public function addErrorMessage($message = null)
+    {
+        $this->errorMessages [] = $message;
+        $this->template->setParam('error_message', implode('</br>', $this->errorMessages));
+
+    }
+
+    public function clearErrorMessage()
+    {
+        $this->errorMessages = [];
+        $this->template->setParam('error_message', null);
+
+    }
+
+    public function isErrorMessageExists()
+    {
+        return count($this->errorMessages) > 0;
     }
 }

@@ -2,9 +2,9 @@
 
 namespace core;
 
-use core\ReguestMethod;
+use core\RequestMethod;
 
-class Get extends ReguestMethod
+class Get extends RequestMethod
 {
     public function __construct()
     {

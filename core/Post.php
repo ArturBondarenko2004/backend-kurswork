@@ -2,7 +2,7 @@
 
 namespace core;
 
-class Post extends ReguestMethod
+class Post extends RequestMethod
 {
    public function __construct()
    {

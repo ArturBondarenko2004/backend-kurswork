@@ -21,11 +21,6 @@ class NewsController extends Controller
     public function actionIndex()
     {
 
-//        $row = Users::findById(1);
-//        var_dump(
-//            $row
-//        );
-//        die;
   return $this ->render('views/news/view.php');
     }
 

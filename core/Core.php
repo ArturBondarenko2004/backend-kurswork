@@ -4,6 +4,7 @@ namespace core;
 
 class Core
 {
+    public Controller $controllerObject;
     public $defaultLayoutPath = 'views/layouts/index.php';
     public $moduleName;
     public $actionName;
@@ -12,6 +13,7 @@ class Core
     public $db;
     private static $instance;
     public $session;
+
 
     private function __construct()
     {
