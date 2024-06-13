@@ -31,14 +31,22 @@ class Controller
         $this->errorMessages = [];
     }
 
-    public function render($pathToView = null)
+    public function render($pathToView = null, $data = [])
     {
         if (!empty($pathToView))
             $this->template->setTemplateFilePath($pathToView);
+
+        // Передача даних у шаблон
+        foreach ($data as $key => $value) {
+            $this->template->setParam($key, $value);
+        }
+
         return [
             'Content' => $this->template->getHTML()
         ];
     }
+
+
 
     public function redirect($path)
     {

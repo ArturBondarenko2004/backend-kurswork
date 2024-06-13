@@ -39,7 +39,7 @@ if (empty($Content))
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Customers</a></li>
                 <li><a href="#" class="nav-link px-2 link-body-emphasis">Products</a></li>
                 <?php if (!Users::isUserLogged()) : ?>
-                <li><a href="/users/login" class="nav-link px-2 link-body-emphasis">Увійти</a></li>
+                    <li><a href="/users/login" class="nav-link px-2 link-body-emphasis">Увійти</a></li>
                     <li><a href="/users/register" class="nav-link px-2 link-body-emphasis">Зареєструватись</a></li>
                 <?php endif; ?>
             </ul>

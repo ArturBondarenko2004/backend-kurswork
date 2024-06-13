@@ -38,26 +38,29 @@ class DB
 
     public function select($table, $fields = "*", $where = null)
     {
-
-        if (is_array($fields))
+        if (is_array($fields)) {
             $fields_string = implode(',', $fields);
-        else
-            if (is_string($fields))
-                $fields_string = $fields;
-            else
-                $fields_string = "*";
-        $where_string = $this->where($where);
-
-        $sql = "SELECT {$fields_string} FROM {$table} {$where_string}";
-        $sth = $this->pdo->prepare($sql);
-        foreach ($where as $key => $value) {
-
-            $sth->bindValue(":{$key}", $value);
-
+        } elseif (is_string($fields)) {
+            $fields_string = $fields;
+        } else {
+            $fields_string = "*";
         }
+
+        $where_string = $this->where($where);
+        $sql = "SELECT {$fields_string} FROM {$table} {$where_string}";
+
+        $sth = $this->pdo->prepare($sql);
+
+        if (is_array($where) && !empty($where)) {
+            foreach ($where as $key => $value) {
+                $sth->bindValue(":{$key}", $value);
+            }
+        }
+
         $sth->execute();
         return $sth->fetchAll();
     }
+
 
     public function insert($table, $row_to_insert)
     {

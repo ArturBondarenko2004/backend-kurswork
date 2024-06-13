@@ -34,7 +34,7 @@ class Core
         $this->router = new \core\Router($route);
         $params = $this->router->run();
         if(!empty($params))
-        $this->template->setParams($params);
+            $this->template->setParams($params);
     }
 
     public function done()

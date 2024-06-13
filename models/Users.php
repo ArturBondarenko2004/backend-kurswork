@@ -34,16 +34,24 @@ class Users extends Model
         } else
             return null;
     }
-    public static function isUserLogged(){
-        return  !empty(Core::get()->session->get('user'));
+
+    public static function isUserLogged()
+    {
+        return !empty(Core::get()->session->get('user'));
     }
-    public static function LoginUser($user){
+
+    public static function LoginUser($user)
+    {
         Core::get()->session->set('user', $user);
     }
-    public static function LogoutUser(){
+
+    public static function LogoutUser()
+    {
         Core::get()->session->remove('user');
     }
-    public static function RegisterUser($login, $password,$lastname, $firstname){
+
+    public static function RegisterUser($login, $password, $lastname, $firstname)
+    {
         $user = new Users();
         $user->login = $login;
         $user->password = $password;
