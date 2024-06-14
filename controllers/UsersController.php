@@ -13,6 +13,7 @@ class UsersController extends Controller
     {
         if (Users::isUserLogged())
             return $this->redirect('/');
+
         if ($this->isPost) {
 
             $user = Users::FindByLoginAndPassword($this->post->login, $this->post->password);
@@ -21,7 +22,7 @@ class UsersController extends Controller
                 return $this->redirect('/');
 
             } else
-                $this->setErrorMessage('Неправильний логін та/або пароль');
+                $this->addErrorMessage('Неправильний логін та/або пароль');
 
         }
 
@@ -51,12 +52,13 @@ class UsersController extends Controller
             if (strlen($this->post->firstname) === 0)
                 $this->addErrorMessage("Ім`я не вказано");
             if (!$this->isErrorMessageExists()) {
-                Users::RegisterUser($this->post->login,$this->post->password,$this->post->lastname,$this->post->firstname);
+                Users::RegisterUser($this->post->login, $this->post->password, $this->post->lastname, $this->post->firstname);
                 return $this->redirect('/users/registersuccess');
             }
         }
         return $this->render();
     }
+
     public function actionRegistersuccess()
     {
         return $this->render();

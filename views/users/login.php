@@ -1,6 +1,6 @@
 <?php
 /** @var string $error_message Повідомлення про помилку */
-//$this->Title = 'Авторизація'
+$this->Title = 'Авторизація'
 ?>
 <h1> Вхід на сайт</h1>
 <form method="post" action="">

@@ -14,7 +14,9 @@ use Couchbase\User;
  * @property string $lastname новини
  */
 class Users extends Model
+
 {
+    public static $currentUser;
     public static $tableName = 'users';
 
     public static function FindByLoginAndPassword($login, $password)
@@ -58,6 +60,14 @@ class Users extends Model
         $user->lastname = $lastname;
         $user->firstname = $firstname;
         $user->save();
+    }
+    public static function getCurrentUser()
+    {
+        return Core::get()->session->get('user');
+    }
+    public static function isAdmin() {
+        $user = self::getCurrentUser();
+        return $user && $user->login === 'admin@ztu.edu.ua';
     }
 
 

@@ -1,7 +1,11 @@
-
 <?php
+
 /** @var array $data */
+
 /** @var string $Title */
+
+use models\Users;
+
 $this->Title = 'Новини';
 ?>
 
@@ -20,8 +24,9 @@ $this->Title = 'Новини';
 </head>
 <body>
 <div class="container mt-5">
-
-    <a href="/news/add" class="btn btn-primary mb-4">Додати новину</a>
+    <?php if (Users::isAdmin()) : ?>
+        <a href="/news/add" class="btn btn-primary mb-4">Додати новину</a>
+    <?php endif; ?>
     <?php if (!empty($data)) : ?>
         <div class="row">
             <?php foreach ($data as $newsItem) : ?>
@@ -29,14 +34,17 @@ $this->Title = 'Новини';
                     <div class="card">
                         <div class="card-body">
                             <h5 class="card-title"><?= htmlspecialchars($newsItem->title); ?></h5>
-                            <h6 class="card-subtitle mb-2 text-muted"><?= htmlspecialchars($newsItem->short_text); ?></h6>
                             <p class="card-text"><?= htmlspecialchars($newsItem->text); ?></p>
-                            <p class="card-text"><small class="text-muted">Дата: <?= htmlspecialchars($newsItem->date); ?></small></p>
+                            <p class="card-text"><small
+                                        class="text-muted">Дата: <?= htmlspecialchars($newsItem->date); ?></small></p>
                         </div>
-                        <div class="card-footer">
-                            <a href="/news/edit/<?= $newsItem->id; ?>" class="btn btn-warning btn-sm">Редагувати</a>
-                            <a href="/news/delete/<?= $newsItem->id; ?>" class="btn btn-danger btn-sm">Видалити</a>
-                        </div>
+                        <?php $currentUser = Users::getCurrentUser(); ?>
+                        <?php if ($currentUser && Users::isAdmin()) : ?>
+                            <div class="card-footer">
+                                <a href="/news/edit/<?= $newsItem->id; ?>" class="btn btn-warning btn-sm">Редагувати</a>
+                                <a href="/news/delete/<?= $newsItem->id; ?>" class="btn btn-danger btn-sm">Видалити</a>
+                            </div>
+                        <?php endif; ?>
                     </div>
                 </div>
             <?php endforeach; ?>

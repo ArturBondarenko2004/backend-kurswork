@@ -20,21 +20,24 @@ class DB
     protected function where($where)
     {
         if (is_array($where)) {
+            if (empty($where)) {
+                return '';
+            }
             $where_string = "WHERE ";
             $where_fields = array_keys($where);
             $parts = [];
             foreach ($where_fields as $field) {
-                $parts [] = "{$field} = :{$field}";
+                $parts[] = "{$field} = :{$field}";
             }
             $where_string .= implode(' AND ', $parts);
-            var_dump($where_string);
-        } else
-            if (is_string($where))
-                $where_string = $where;
-            else
-                $where_string = '';
+        } elseif (is_string($where)) {
+            $where_string = $where;
+        } else {
+            $where_string = '';
+        }
         return $where_string;
     }
+
 
     public function select($table, $fields = "*", $where = null)
     {
@@ -60,6 +63,20 @@ class DB
         $sth->execute();
         return $sth->fetchAll();
     }
+    public function customSelect($table, $fields = "*", $whereClause = '')
+    {
+        // Формування SQL-запиту з урахуванням переданої умови $whereClause
+        $sql = "SELECT {$fields} FROM {$table} {$whereClause}";
+
+        // Підготовка та виконання запиту
+        $sth = $this->pdo->prepare($sql);
+        $sth->execute();
+
+        // Повернення результатів запиту
+        return $sth->fetchAll();
+    }
+
+
 
 
     public function insert($table, $row_to_insert)

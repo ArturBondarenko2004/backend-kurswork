@@ -15,6 +15,9 @@ class NewsController extends Controller
     //News/add
     public function actionAdd(): array
     {
+        if (!Users::isAdmin()) {
+            return $this->redirect('/'); // Перенаправлення на головну сторінку або на іншу сторінку
+        }
         if ($this->isPost) {
             $requestData = new RequestMethod($_POST);
 
@@ -48,22 +51,11 @@ class NewsController extends Controller
 
     public function actionIndex(): array
     {
-        // Default sorting and search parameters
-        $sortBy = isset($_GET['sort']) ? $_GET['sort'] : 'date'; // Default sort by date
-        $sortOrder = isset($_GET['order']) && strtolower($_GET['order']) === 'asc' ? 'ASC' : 'DESC'; // Default sort order DESC
-        $searchTerm = isset($_GET['search']) ? $_GET['search'] : '';
 
-        // Get news data based on sort and search criteria
-        $data = News::getNews($sortBy, $sortOrder, $searchTerm);
-
-        return $this->render('views/news/view.php', [
-            'data' => $data,
-            'sortBy' => $sortBy,
-            'sortOrder' => $sortOrder,
-            'searchTerm' => $searchTerm,
-        ]);
+        $data = \models\News::getNews();
+//        var_dump($data);
+        return $this->render('views/news/view.php', ['data' => $data]);
     }
-
 
 
     public function actionView($params): array
@@ -71,9 +63,13 @@ class NewsController extends Controller
         $data = [];
         return $this->render('views/news/view.php', ['data' => $data]);
     }
+
     // News/edit/{id}
     public function actionEdit($params): array
     {
+        if (!Users::isAdmin()) {
+            return $this->redirect('/'); // Перенаправлення на головну сторінку або на іншу сторінку
+        }
         $newsId = $params[0];
         $newsItem = News::getNewsById($newsId);
 
@@ -96,4 +92,6 @@ class NewsController extends Controller
 
         return $this->render('views/news/edit.php', ['newsItem' => $newsItem]);
     }
+
+
 }
