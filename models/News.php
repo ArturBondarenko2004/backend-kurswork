@@ -18,7 +18,6 @@ class News extends Model
 
     public static function getNews(): ?array
     {
-        // Використовуємо fetchAll(\PDO::FETCH_ASSOC) для отримання асоціативних масивів
         return Core::get()->db->select(self::$tableName, "*", null, \PDO::FETCH_ASSOC);
     }
 
@@ -36,7 +35,4 @@ class News extends Model
     {
         return Core::get()->db->delete('news', $where);
     }
-
-
 }
-?>

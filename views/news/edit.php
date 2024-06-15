@@ -18,10 +18,7 @@ $this->Title = 'Редагувати новину';
             <label for="title">Заголовок</label>
             <input type="text" class="form-control" id="title" name="title" value="<?= htmlspecialchars($newsItem->title); ?>">
         </div>
-        <div class="form-group">
-            <label for="short_text">Короткий опис</label>
-            <input type="text" class="form-control" id="short_text" name="short_text" value="<?= htmlspecialchars($newsItem->short_text); ?>">
-        </div>
+
         <div class="form-group">
             <label for="text">Повний текст</label>
             <textarea class="form-control" id="text" name="text"><?= htmlspecialchars($newsItem->text); ?></textarea>

@@ -1,9 +1,21 @@
 <?php
 /** @var string $error_message Повідомлення про помилку */
-//$this->Title = 'Реєстрація нового користувача';
+$this->Title = 'Реєстрація нового користувача';
 
 ?>
-
+<style>
+    .form-label {
+        font-size: 25px;
+    }
+    .form-container{
+        width: 50%;
+        margin: 0 auto;
+    }
+    .alert{
+        font-size: 20px;
+    }
+</style>
+<div class="form-container">
 <form method="post" action="">
     <?php if (!empty($error_message)): ?>
         <div class="alert alert-danger" role="alert">
@@ -38,3 +50,4 @@
     </div>
     <button type="submit" class="btn btn-primary">Зареєструватися</button>
 </form>
+</div>

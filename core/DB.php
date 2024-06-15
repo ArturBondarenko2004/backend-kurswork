@@ -37,6 +37,15 @@ class DB
         }
         return $where_string;
     }
+    public function query($sql)
+    {
+        return $this->pdo->query($sql);
+    }
+    public function prepare($sql)
+    {
+        return $this->pdo->prepare($sql);
+    }
+
 
 
     public function select($table, $fields = "*", $where = null)

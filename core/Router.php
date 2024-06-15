@@ -2,8 +2,11 @@
 
 namespace core;
 class Router
+
 {
+
     protected $route;
+
     public function __construct($route)
     {
         $this->route = $route;
@@ -35,7 +38,7 @@ class Router
                 $this->error(404);
         } else
             $this->error(404);
-//
+
     }
 
     public function done()

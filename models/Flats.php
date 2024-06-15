@@ -40,8 +40,6 @@ class Flats extends Model
         return $flats;
     }
 
-
-
     public static function getFlatsById($id)
     {
         return Core::get()->db->select(self::$tableName, '*', ['id' => $id])[0] ?? null;
@@ -52,35 +50,34 @@ class Flats extends Model
         return Core::get()->db->update(self::$tableName, $data, ['id' => $id]);
     }
 
-    public static function deleteById($id)
-    {
-        Core::get()->db->delete(static::$tableName, ['id' => $id]);
-    }
 
     public function delete($where)
     {
         return Core::get()->db->delete(self::$tableName, $where);
     }
 
+    public static function deleteById($id)
+    {
+        return Core::get()->db->delete(self::$tableName, ['id' => $id]);
+    }
+
     public function save()
     {
         $data = [
             'city_id' => $this->city_id,
+            'title' => $this->title,
             'address' => $this->address,
             'price' => $this->price,
-            'area' => $this->area,
             'description' => $this->description,
-            'status_id' => $this->status_id,
-            'rooms_id' => $this->rooms_id,
             'saler_contact' => $this->saler_contact,
             'saler_name' => $this->saler_name,
             'photo_path' => $this->photo_path,
-            'id' => $this->id // Припустимо, що це поле flats_id
         ];
 
-        Core::get()->db->update(self::$tableName, $data, ['id' => $this->flats_id]);
+        if (isset($this->id) && $this->id) {
+            Core::get()->db->update(self::$tableName, $data, ['id' => $this->id]);
+        } else {
+            Core::get()->db->insert(self::$tableName, $data);
+        }
     }
-
 }
-
-?>

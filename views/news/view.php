@@ -19,14 +19,22 @@ $this->Title = 'Новини';
         .card-text {
             word-wrap: break-word;
             white-space: pre-wrap;
+            border-radius: 24px;
         }
+
+        .card-title {
+            font-size: 25px;
+        }
+
+        .card-text {
+            font-size: 20px;
+        }
+
     </style>
 </head>
 <body>
 <div class="container mt-5">
-    <?php if (Users::isAdmin()) : ?>
-        <a href="/news/add" class="btn btn-primary mb-4">Додати новину</a>
-    <?php endif; ?>
+
     <?php if (!empty($data)) : ?>
         <div class="row">
             <?php foreach ($data as $newsItem) : ?>
@@ -48,11 +56,40 @@ $this->Title = 'Новини';
                     </div>
                 </div>
             <?php endforeach; ?>
+
         </div>
     <?php else : ?>
         <p class="alert alert-warning">Немає новин для відображення.</p>
     <?php endif; ?>
 </div>
+
+<script>
+    $(document).ready(function () {
+        $('.delete-news').click(function (e) {
+            e.preventDefault();
+            var newsId = $(this).data('news-id');
+
+            if (confirm('Ви впевнені, що хочете видалити цю новину?')) {
+                $.ajax({
+                    type: 'POST',
+                    url: '/news/delete/' + newsId,
+                    success: function (response) {
+                        // Assuming the server returns a success message or status
+                        if (response.success) {
+                            // Optionally remove the deleted news item from the UI
+                            $('[data-news-id="' + newsId + '"]').closest('.col-12').remove();
+                        } else {
+                            alert('Не вдалося видалити новину.');
+                        }
+                    },
+                    error: function () {
+                        alert('Помилка під час видалення новини.');
+                    }
+                });
+            }
+        });
+    });
+</script>
 <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
 <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.5.4/dist/umd/popper.min.js"></script>
 <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>

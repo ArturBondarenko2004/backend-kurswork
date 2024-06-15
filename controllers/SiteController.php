@@ -3,7 +3,7 @@
 namespace controllers;
 
 use core\Controller;
-use core\Template;
+
 
 class SiteController extends Controller
 {

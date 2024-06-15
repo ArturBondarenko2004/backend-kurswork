@@ -14,10 +14,8 @@ class Core
     private static $instance;
     public $session;
 
-
     private function __construct()
     {
-
         $this->template = new Template($this->defaultLayoutPath);
         $host = Config::get()->dbHost;
         $name = Config::get()->dbName;
@@ -28,7 +26,6 @@ class Core
         session_start();
 
     }
-
     public function run($route)
     {
         $this->router = new \core\Router($route);
@@ -36,13 +33,11 @@ class Core
         if(!empty($params))
             $this->template->setParams($params);
     }
-
     public function done()
     {
         $this->template->display();
         $this->router->done();
     }
-
     public static function get()
     {
         if (empty(self::$instance)) {
@@ -51,5 +46,4 @@ class Core
         return self::$instance;
 
     }
-
 }
